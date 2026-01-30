@@ -21,18 +21,20 @@ void vm_init(VM* vm, uint8_t* code) {
 void vm_run(VM* vm) {
     for (;;) {
         OpCode op = vm->code[vm->ip++];
-
         switch (op) {
             case OP_LOAD_CONST: {
                 uint8_t reg = vm->code[vm->ip++];
                 int value   = vm->code[vm->ip++];
                 vm->regs[reg] = value;
+
+                printf(" op: OP_LOAD_CONST reg=%d value=%d\n", reg, value);
                 break;
             }
             case OP_LOAD_LOCAL: {
                 uint8_t dst   = vm->code[vm->ip++];
                 uint8_t local = vm->code[vm->ip++];
                 vm->regs[dst] = vm->frames[vm->frame_top].locals[local];
+                printf(" op: OP_LOAD_LOCAL dst=%d local=%d value=%d\n", dst, local, vm->frames[vm->frame_top].locals[local]);
                 break;
             }
 
@@ -40,6 +42,7 @@ void vm_run(VM* vm) {
                 uint8_t local = vm->code[vm->ip++];
                 uint8_t src   = vm->code[vm->ip++];
                 vm->frames[vm->frame_top].locals[local] = vm->regs[src];
+                printf(" op: OP_STORE_LOCAL local=%d src=%d value=%d\n", local, src,  vm->regs[src]);
                 break;
             }
 
@@ -48,6 +51,7 @@ void vm_run(VM* vm) {
                 uint8_t a   = vm->code[vm->ip++];
                 uint8_t b   = vm->code[vm->ip++];
                 vm->regs[dst] = vm->regs[a] + vm->regs[b];
+                printf(" op: OP_ADD dst=%d a=%d b=%d value=%d\n", dst, a, b, vm->regs[dst]);
                 break;
             }
 
@@ -111,6 +115,6 @@ int main() {
     vm_init(&vm, program);
     vm_run(&vm);
 
-    printf("result = %d\n", vm.regs[4]);
+    printf("result = %d\n", vm.regs[0]);
     return 0;
 }

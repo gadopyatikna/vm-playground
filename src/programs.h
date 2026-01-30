@@ -45,23 +45,24 @@ uint8_t program[] = {
     OP_LOAD_CONST,  0, 1,        // r0 = 1              //0
     OP_STORE_LOCAL, 0, 0,        // main.x = r0         //3
 
-    OP_CALL,        22,          // call foo            //6
+    OP_CALL,        25,          // call foo            //6
 
     OP_LOAD_LOCAL,  1, 0,        // r1 = main.x         //8
     OP_LOAD_CONST,  2, 1,                               //11
     OP_ADD,         3, 1, 2,    // r3 = r1 + r2         //14 
     OP_STORE_LOCAL, 1, 3,        // z = x + 1           //18
 
+    OP_LOAD_LOCAL,  0, 1, 
     OP_HALT,                                            //21
 
-    // --- foo (address 22) ---
-    OP_LOAD_CONST,  0, 2,        // r0 = 2              //22
-    OP_STORE_LOCAL, 0, 0,        // foo.x = 2           //25
+    // --- foo (address 25) ---
+    OP_LOAD_CONST,  0, 2,        // r0 = 2              //25
+    OP_STORE_LOCAL, 0, 0,        // l0 = r0 foo.x = 2   //28
 
-    OP_LOAD_LOCAL,  1, 0,                               //28
-    OP_LOAD_CONST,  2, 1,                               //31   
-    OP_ADD,         3, 1, 2,                            //34 
-    OP_STORE_LOCAL, 1, 3,        // y = x + 1           //38
+    OP_LOAD_LOCAL,  1, 0,        // r1 = l0             //31
+    OP_LOAD_CONST,  2, 1,        // r2 = 1              //34  
+    OP_ADD,         3, 1, 2,     // r3 = r1 + r2        //37 
+    OP_STORE_LOCAL, 1, 3,        // l1 = r3 y = x + 1   //41
 
     OP_RET
 };
