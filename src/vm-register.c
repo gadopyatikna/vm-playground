@@ -15,6 +15,7 @@ void vm_init(VM* vm, uint8_t* code) {
 
     vm->code = code;
     vm->ip = 0;
+    vm->frame_top = 0;
 }
 
 void vm_run(VM* vm) {

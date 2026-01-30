@@ -71,3 +71,7 @@ typedef struct {
 нет стека фреймов
 нет механизма создания / уничтожения frame
 нет даже концепции «текущий frame меняется»
+
+gcc -Wall -Wextra -g \
+    vm-register.c \
+    -o vm
