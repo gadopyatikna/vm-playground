@@ -20,9 +20,9 @@ typedef struct {
 } Frame;
 
 typedef struct {
-    int regs[REG_COUNT];   // виртуальные регистры
-    uint8_t* code;         // байткод
-    int ip;                // instruction pointer
+    int regs[REG_COUNT];
+    uint8_t* code;
+    int ip;
     Frame frame;
 } VM;
 
@@ -47,6 +47,19 @@ void vm_run(VM* vm) {
                 uint8_t reg = vm->code[vm->ip++];
                 int value   = vm->code[vm->ip++];
                 vm->regs[reg] = value;
+                break;
+            }
+            case OP_LOAD_LOCAL: {
+                uint8_t dst   = vm->code[vm->ip++];
+                uint8_t local = vm->code[vm->ip++];
+                vm->regs[dst] = vm->frame.locals[local];
+                break;
+            }
+
+            case OP_STORE_LOCAL: {
+                uint8_t local = vm->code[vm->ip++];
+                uint8_t src   = vm->code[vm->ip++];
+                vm->frame.locals[local] = vm->regs[src];
                 break;
             }
 
