@@ -10,9 +10,9 @@ typedef enum {
 
 typedef struct {
     int stack[256];
-    int sp;              // stack pointer
-    uint8_t* code;       // bytecode
-    int ip;              // instruction pointer
+    int sp;
+    uint8_t* code;
+    int ip;
 } VM;
 
 void vm_init(VM* vm, uint8_t* code) {

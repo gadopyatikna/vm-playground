@@ -43,3 +43,31 @@ r4 = r2 * r3
     dead code elimination
     threaded / direct dispatch
     tiny JIT (хотя бы в asm)
+
+Исходный пункт:
+typedef enum {
+    OP_LOAD_CONST,
+    OP_LOAD_LOCAL,
+    OP_STORE_LOCAL,
+    OP_ADD,
+    OP_MUL,
+    OP_JMP,
+    OP_JMP_IF_FALSE,
+    OP_HALT
+} OpCode;
+
+typedef struct {
+    int locals[LOCAL_COUNT];
+} Frame;
+
+typedef struct {
+    int regs[REG_COUNT];
+    uint8_t* code;
+    int ip;
+    Frame frame;
+} VM;
+
+нет CALL / RET
+нет стека фреймов
+нет механизма создания / уничтожения frame
+нет даже концепции «текущий frame меняется»
