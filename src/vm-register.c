@@ -108,9 +108,6 @@ void vm_run(VM* vm) {
 
 
 int main() {
-
-
-
     VM vm;
     vm_init(&vm, program);
     vm_run(&vm);
